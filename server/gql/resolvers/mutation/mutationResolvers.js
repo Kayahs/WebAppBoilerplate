@@ -15,7 +15,7 @@ export default {
         const emailLC = email.toString().toLowerCase()
 
         const findUserQ = {
-          text: 'SELECT * FROM portfolio.users WHERE email = $1',
+          text: 'SELECT * FROM schemaName.users WHERE email = $1',
           values: [emailLC]
         }
 
@@ -49,8 +49,7 @@ export default {
         const hashedPW = bcrypt.hashSync(password, salt)
 
         const addUserQ = {
-          text:
-            'INSERT INTO portfolio.users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *',
+          text: 'INSERT INTO portfolio.users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *',
           values: [fullname, emailLC, hashedPW]
         }
 
