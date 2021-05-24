@@ -3,7 +3,7 @@
     "start": "node scripts/babelScripts/indexStart.js",
     "start:dev": "nodemon scripts/babelScripts/indexStart.js",
     "db:up": "node-pg-migrate up --create-schema",
-    "db:drop": "psql -U postgres -d postgres -c \"DROP SCHEMA IF EXISTS \\\"portfolio\\\" CASCADE \"",
+    "db:drop": "psql -U postgres -d postgres -c \"DROP SCHEMA IF EXISTS \\\"schemaName\\\" CASCADE \"",
     "db:reset": "yarn db:drop && yarn db:up",
     "db:seed": "node scripts/babelScripts/seedStart.js",
     "db:ras": "yarn db:reset && yarn db:seed",

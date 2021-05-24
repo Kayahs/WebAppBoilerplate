@@ -5,6 +5,9 @@ import Promise from 'bluebird'
 
 export default {
   Mutation: {
+    /* 
+      Function to login user
+    */
     async login(
       p,
       { input: { email, password } },
@@ -15,7 +18,7 @@ export default {
         const emailLC = email.toString().toLowerCase()
 
         const findUserQ = {
-          text: 'SELECT * FROM portfolio.users WHERE email = $1',
+          text: 'SELECT * FROM schemaName.users WHERE email = $1',
           values: [emailLC]
         }
 
@@ -38,6 +41,9 @@ export default {
         return { message: e.message || e }
       }
     },
+    /* 
+      Function to sign up user
+    */
     async signup(
       p,
       { input: { email, password, fullname } },
@@ -49,8 +55,7 @@ export default {
         const hashedPW = bcrypt.hashSync(password, salt)
 
         const addUserQ = {
-          text:
-            'INSERT INTO portfolio.users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *',
+          text: 'INSERT INTO portfolio.users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *',
           values: [fullname, emailLC, hashedPW]
         }
 
@@ -74,6 +79,10 @@ export default {
         }
       }
     },
+
+    /*
+      Function to send email using nodemailer
+    */
     async sendEmail(p, { input: { to, subject, text, html } }, { transporter }, i) {
       let info = await transporter.sendMail({
         from: '"Akshay Manchanda" <akshaykmanchanda@gmail.com>',

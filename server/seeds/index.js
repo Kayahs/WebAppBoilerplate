@@ -5,12 +5,14 @@ import options from '../config/options.json'
 import dotenv from 'dotenv'
 import bcrypt from 'bcryptjs'
 
+//Load Environment Variables
 dotenv.config()
 
 const defaultPassword = process.env.DEFAULT_PASSWORD
 
 const squelps = squel.useFlavour('postgres')
 
+//Generate hashed password to use for default account
 const hashedPassword = bcrypt.hashSync(defaultPassword, options.salt)
 
 const userSeeds = [
@@ -21,6 +23,7 @@ const userSeeds = [
   }
 ]
 
+//Initialize default account
 const seed = async () => {
   const pg = await new Pool(config.db).connect()
   try {
@@ -29,14 +32,8 @@ const seed = async () => {
     console.log('Seeding Users...')
 
     await Promise.all(
-      userSeeds.map(userSeed =>
-        pg.query(
-          squelps
-            .insert()
-            .into('portfolio.users')
-            .setFields(userSeed)
-            .toParam()
-        )
+      userSeeds.map((userSeed) =>
+        pg.query(squelps.insert().into('portfolio.users').setFields(userSeed).toParam())
       )
     )
 
@@ -53,7 +50,7 @@ const seed = async () => {
   }
 }
 
-seed().catch(e => {
+seed().catch((e) => {
   setImmediate(() => {
     throw e
   })
