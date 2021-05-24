@@ -5,6 +5,9 @@ import Promise from 'bluebird'
 
 export default {
   Mutation: {
+    /* 
+      Function to login user
+    */
     async login(
       p,
       { input: { email, password } },
@@ -38,6 +41,9 @@ export default {
         return { message: e.message || e }
       }
     },
+    /* 
+      Function to sign up user
+    */
     async signup(
       p,
       { input: { email, password, fullname } },
@@ -73,6 +79,10 @@ export default {
         }
       }
     },
+
+    /*
+      Function to send email using nodemailer
+    */
     async sendEmail(p, { input: { to, subject, text, html } }, { transporter }, i) {
       let info = await transporter.sendMail({
         from: '"Akshay Manchanda" <akshaykmanchanda@gmail.com>',
